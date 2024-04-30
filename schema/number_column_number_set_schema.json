@@ -1,0 +1,32 @@
+{
+  "$id": "number_column_number_set_schema.json",
+  "type": "object",
+  "description": "How to get values for number column from granular set.",
+  "properties": {
+    "min_number": {
+      "type": "integer",
+      "description": "Left boundary of the set."
+    },
+    "max_number": {
+      "type": "integer",
+      "description": "Right boundary of the set."
+    },
+    "granularity": {
+      "type": "integer",
+      "description": "Number separating elements."
+    },
+    "choose_method": {
+      "type": "string",
+      "description": "How to choose values from the granular set.",
+      "enum": [
+        "random", "round_robin"
+      ]
+    }
+  },
+  "required": [
+    "min_number",
+    "max_number",
+    "choose_method"
+  ],
+  "additionalProperties": false
+}

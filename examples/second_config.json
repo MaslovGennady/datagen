@@ -1,0 +1,59 @@
+{
+  "datasets": [
+    {
+      "name": "third_test_dataset",
+      "row_count": 100,
+      "quote_values": 1,
+      "separator": "\t",
+      "write_method": "new",
+      "columns": [
+        {
+          "name": "num_sequence",
+          "type": "number",
+          "sequence": {
+            "start_value": 1
+          }
+        },
+        {
+          "name": "fd_keys",
+          "type": "number",
+          "functional_dependency": {
+            "name": "fd_second_test_dataset",
+            "use_mode": "generate_from_keys",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "fd_values_str",
+          "type": "number",
+          "functional_dependency": {
+            "name": "fd_second_test_dataset",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["fd_keys"],
+            "value_position": 0
+          }
+        },
+        {
+          "name": "fd_values_number",
+          "type": "string",
+          "functional_dependency": {
+            "name": "fd_second_test_dataset",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["fd_keys"],
+            "value_position": 1
+          }
+        }
+      ]
+    }
+  ],
+  "functional_dependencies": [
+    {
+      "name": "fd_second_test_dataset",
+      "key_columns": [0],
+      "data_columns": [1,2],
+      "file": "./result/second_test_dataset",
+      "separator": "\t"
+    }
+
+  ]
+}

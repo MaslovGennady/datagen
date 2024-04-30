@@ -1,0 +1,37 @@
+{
+  "description": "General schema",
+  "$id": "config_schema.json",
+  "type": "object",
+  "properties": {
+    "datasets": {
+      "description": "List of dataset elements.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": [
+        {
+          "$ref": "dataset_schema.json"
+        }
+      ]
+    },
+    "constant_lists": {
+      "description": "List of elements of set of constants type.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "constant_list_schema.json"
+      }
+    },
+    "functional_dependencies": {
+      "description": "List of elements of key-value type.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "functional_dependency_schema.json"
+      }
+    }
+  },
+  "required": [
+    "datasets"
+  ]
+}

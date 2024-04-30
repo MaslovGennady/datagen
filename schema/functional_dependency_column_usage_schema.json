@@ -1,0 +1,55 @@
+{
+  "$id": "functional_dependency_column_usage_schema.json",
+  "description": "How to generate value for column from functional dependency.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the functional dependency."
+    },
+    "use_mode": {
+      "type": "string",
+      "description": "Select a value from the FD keys (generate-from-keys) or get a value using a key formed from the values of other columns (choose-from-values)",
+      "enum": [
+        "generate_from_keys", "choose_from_values"
+      ]
+    },
+    "dataset_columns_as_fd_key": {
+      "type": "array",
+      "description": "In case of use_mode=choose-from-values. Here the columns are listed from the values of which the key will be formed to obtain the value from the FD.",
+      "items": [{"type": "string"}],
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "value_position": {
+      "type": "integer",
+      "description": "In case of use_mode=choose-from-values. Number of column from data columns of FD to return as a generated value."
+    },
+    "choose_method": {
+      "type": "string",
+      "description": "In case of use_mode=generate-from-keys. The way we get exact value from set of values (keys of FD).",
+      "enum": [
+        "random", "round_robin"
+      ]
+    }
+  },
+  "if": {
+    "properties": {
+      "use_mode": {"const": "generate_from_keys"}
+    }
+  },
+  "then": {
+    "required": [
+      "name",
+      "use_mode",
+      "choose_method"]
+  },
+  "else": {
+    "required": [
+      "name",
+      "use_mode",
+      "dataset_columns_as_fd_key",
+      "value_position"
+    ]
+  }
+}

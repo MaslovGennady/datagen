@@ -1,0 +1,40 @@
+{
+  "$id": "functional_dependency_schema.json",
+  "description": "Key-value structure.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name can be used in the column definition section called functional-dependency."
+    },
+    "key_columns": {
+      "type": "array",
+      "description": "Key-columns is a list of numbers of columns from the source file that will be treated as keys.",
+      "items": [{"type": "number"}],
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "data_columns": {
+      "type": "array",
+      "description": "Data-columns are the numbers of columns from the source file that will be treated as values.",
+      "items": [{"type": "number"}],
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "file": {
+      "type": "string",
+      "description": "File is the path to the source file."
+    },
+    "separator": {
+      "type": "string",
+      "description": "Separator is the symbol used as a separator while parsing separated values from the file.",
+      "maxLength": 1
+    }
+  },
+  "required": [
+    "name",
+    "key_columns",
+    "data_columns",
+    "file"
+  ]
+}

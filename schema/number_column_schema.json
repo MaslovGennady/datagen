@@ -1,0 +1,71 @@
+{
+  "$id": "number_column_schema.json",
+  "description": "Schema of number column.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the column."
+    },
+    "type": {
+      "const": "number",
+      "description": "Type of the column (only number)."
+    },
+    "sequence": {
+          "$ref": "number_column_sequence_schema.json"
+    },
+    "functional_dependency": {
+          "$ref": "functional_dependency_column_usage_schema.json"
+    },
+    "number_set": {
+          "$ref": "number_column_number_set_schema.json"
+    },
+    "constant": {
+      "type": "number",
+      "description": "Put a constant number value here."
+    },
+    "constant_list": {
+          "$ref": "number_column_constant_list_schema.json"
+    },
+    "global_constant_list": {
+      "type": "object",
+      "description": "How to use the global set of constants.",
+      "properties": {
+      "name": {
+        "type": "string",
+        "description": "What constant set to use."
+        },
+      "choose_method": {
+        "type": "string",
+        "description": "How to get values from global set of constants.",
+        "enum": ["random", "round_robin"]
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "oneOf": [
+    {
+      "required": ["sequence"]
+    },
+    {
+      "required": ["functional_dependency"]
+    },
+    {
+      "required": ["number_set"]
+    },
+    {
+      "required": ["constant"]
+    },
+    {
+      "required": ["constant_list"]
+    },
+    {
+      "required": ["global_constant_list"]
+    }
+  ],
+  "additionalProperties": false
+}

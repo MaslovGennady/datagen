@@ -1,0 +1,65 @@
+{
+  "$id": "dataset_schema.json",
+  "description": "Dataset description.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name is the name of dataset and resulting file name.",
+      "type": "string"
+    },
+    "row_count": {
+      "type": "integer",
+      "description": "Row-count is the number of rows to generate."
+    },
+    "order_by": {
+      "type": "array",
+      "description": "Order-by is a list of columns by which to sort the dataset.",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": [
+        {"type": "string"}
+      ]
+    },
+    "separator": {
+      "type": "string",
+      "description": "Separator is a symbol that will separate values in the resulting file.",
+      "maxLength": 1
+    },
+    "quote_values": {
+      "type": "integer",
+      "description": "Quote-values is an indicator of whether it is necessary to quote output values in the file or not (0/1).",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "write_method": {
+      "type": "string",
+      "description": "Write-method is a method of writing data.",
+      "enum": [
+        "overwrite", "append", "new"
+      ]
+    },
+    "columns": {
+      "type": "array",
+      "description": "List of column definitions.",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "number_column_schema.json"
+          },
+          {
+            "$ref": "datetime_column_schema.json"
+          },
+          {
+            "$ref": "date_column_schema.json"
+          },
+          {
+            "$ref": "string_column_schema.json"
+          }
+        ]
+      }
+    }
+  },
+  "required": ["name", "row_count", "columns"]
+}

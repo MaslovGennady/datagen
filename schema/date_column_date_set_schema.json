@@ -1,0 +1,41 @@
+{
+  "$id": "date_column_date_set_schema.json",
+  "type": "object",
+  "description": "How to get values for date column from granular set.",
+  "properties": {
+    "min_date": {
+      "type": "string",
+      "description": "Left boundary of the set.",
+      "pattern": "^[1-9][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+    },
+    "max_date": {
+      "type": "string",
+      "description": "Right boundary of the set.",
+      "pattern": "^[1-9][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+    },
+    "granularity_type": {
+      "type": "string",
+      "description": "Granularity type (day).",
+      "enum": ["day"]
+    },
+    "granularity_value": {
+      "type": "integer",
+      "description": "Number of granules separating elements."
+    },
+    "choose_method": {
+      "type": "string",
+      "description": "How to choose values from the granular set.",
+      "enum": [
+        "random", "round_robin"
+      ]
+    }
+  },
+  "required": [
+    "min_date",
+    "max_date",
+    "granularity_type",
+    "granularity_value",
+    "choose_method"
+  ],
+  "additionalProperties": false
+}

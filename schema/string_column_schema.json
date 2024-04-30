@@ -1,0 +1,80 @@
+{
+  "$id": "string_column_schema.json",
+  "description": "Schema of date column.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the column."
+    },
+    "type": {
+      "const": "string",
+      "description": "Type of the column (only string)."
+    },
+    "random_letters_length": {
+      "type": "integer",
+      "description": "Enter the number of letters that will be randomly generated."
+    },
+    "random_digits_length": {
+      "type": "integer",
+      "description": "Enter the number of digits that will be randomly generated."
+    },
+    "uuid": {
+      "const": "uuid4",
+      "description": "Enter uuid4 literal to generate UUID value with uuid4 algorithm."
+    },
+    "functional_dependency": {
+          "$ref": "functional_dependency_column_usage_schema.json"
+    },
+    "constant": {
+      "type": "string",
+      "description": "Put a constant string here."
+    },
+    "constant_list": {
+          "$ref": "string_column_constant_list_schema.json"
+    },
+    "global_constant_list": {
+      "type": "object",
+      "description": "How to use the global set of constants.",
+      "properties": {
+      "name": {
+        "type": "string",
+        "description": "What constant set to use."
+        },
+      "choose_method": {
+        "type": "string",
+        "description": "How to get values from global set of constants.",
+        "enum": ["random", "round_robin"]
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "oneOf": [
+    {
+      "required": ["functional_dependency"]
+    },
+    {
+      "required": ["random_letters_length"]
+    },
+    {
+      "required": ["random_digits_length"]
+    },
+    {
+      "required": ["constant"]
+    },
+    {
+      "required": ["constant_list"]
+    },
+    {
+      "required": ["global_constant_list"]
+    },
+    {
+      "required": ["uuid"]
+    }
+  ],
+  "additionalProperties": false
+}

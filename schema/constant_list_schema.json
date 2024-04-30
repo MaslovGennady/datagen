@@ -1,0 +1,33 @@
+{
+  "$id": "constant_list_schema.json",
+  "type": "object",
+  "description": "Set of constants.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name can be used in the column definition section called global-constant-list."
+    },
+    "file": {
+      "type": "string",
+      "description": "File is the path to data on disk."
+    },
+    "data": {
+      "type": "array",
+      "description": "Data is a list of values.",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": [
+        {
+          "oneOf": [
+            {"type": "number"},
+            {"type": "string"}
+          ]
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {"required": ["name","file"]},
+    {"required": ["name","data"]}
+  ]
+}

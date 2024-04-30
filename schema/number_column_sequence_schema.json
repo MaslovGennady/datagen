@@ -1,0 +1,19 @@
+{
+  "$id": "number_column_sequence_schema.json",
+  "description": "How to get values for number column as sequence members.",
+  "type": "object",
+  "properties": {
+    "start_value": {
+      "type": "integer",
+      "description": "Starting value of the sequence."
+    },
+    "increment_by": {
+      "type": "integer",
+      "description": "Number to add to previous value to form new value."
+    }
+  },
+  "required": [
+    "start_value"
+  ],
+  "additionalProperties": false
+}

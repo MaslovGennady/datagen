@@ -1,0 +1,27 @@
+{
+  "$id": "date_column_sequence_schema.json",
+  "description": "How to get values for date column as sequence members.",
+  "type": "object",
+  "properties": {
+    "start_value": {
+      "type": "string",
+      "description": "Starting value of the sequence.",
+      "pattern": "^[1-9][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+    },
+    "increment_by": {
+      "type": "integer",
+      "description": "Number of granules to add to previous value to form new value."
+    },
+    "granularity": {
+      "type": "string",
+      "description": "Sequence granule type.",
+      "enum": ["day", "month", "year"]
+    }
+  },
+  "required": [
+    "start_value",
+    "increment_by",
+    "granularity"
+  ],
+  "additionalProperties": false
+}

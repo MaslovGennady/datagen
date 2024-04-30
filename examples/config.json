@@ -1,0 +1,559 @@
+{
+  "datasets": [
+    {
+      "name": "first_test_dataset",
+      "row_count": 100,
+      "quote_values": 1,
+      "separator": ",",
+      "write_method": "overwrite",
+      "order_by": ["num_fd_keys","num_constant_list"],
+      "columns": [
+        {
+          "name": "num_sequence",
+          "type": "number",
+          "sequence": {
+            "start_value": 1
+          }
+        },
+        {
+          "name": "num_fd_values",
+          "type": "number",
+          "functional_dependency": {
+            "name": "fd_num_num",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["num_fd_keys"],
+            "value_position": 0
+          }
+        },
+        {
+          "name": "num_fd_keys",
+          "type": "number",
+          "functional_dependency": {
+            "name": "fd_num_str",
+            "use_mode": "generate_from_keys",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "num_number_set",
+          "type": "number",
+          "number_set": {
+            "min_number": 0,
+            "max_number": 45,
+            "granularity": 15,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "num_constant",
+          "type": "number",
+          "constant": 42
+        },
+        {
+          "name": "num_sec_sequence",
+          "type": "number",
+          "sequence": {
+            "start_value": 100
+          }
+        },
+        {
+          "name": "num_constant_list",
+          "type": "number",
+          "constant_list": {
+            "data": [42, 23, 3, 5, 9],
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "num_constant_list_name_file",
+          "type": "number",
+          "global_constant_list": {
+            "name": "cl_num_file",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "num_constant_list_name_config",
+          "type": "number",
+          "global_constant_list": {
+            "name": "cl_num_config",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "datetime_sequence_second",
+          "type": "datetime",
+          "sequence": {
+            "start_value": "2023-11-11 23:23:59",
+            "increment_by": 1,
+            "granularity": "second"
+          }
+        },
+        {
+          "name": "datetime_sequence_minute",
+          "type": "datetime",
+          "sequence": {
+            "start_value": "2023-11-11 23:23:59",
+            "increment_by": 2,
+            "granularity": "minute"
+          }
+        },
+        {
+          "name": "datetime_sequence_hour",
+          "type": "datetime",
+          "sequence": {
+            "start_value": "2023-11-11 23:23:59",
+            "increment_by": 3,
+            "granularity": "hour"
+          }
+        },
+        {
+          "name": "datetime_sequence_day",
+          "type": "datetime",
+          "sequence": {
+            "start_value": "2023-11-11 23:23:59",
+            "increment_by": 4,
+            "granularity": "day"
+          }
+        },
+        {
+          "name": "datetime_sequence_month",
+          "type": "datetime",
+          "sequence": {
+            "start_value": "2023-11-11 23:23:59",
+            "increment_by": 5,
+            "granularity": "month"
+          }
+        },
+        {
+          "name": "datetime_sequence_year",
+          "type": "datetime",
+          "sequence": {
+            "start_value": "2023-11-11 23:23:59",
+            "increment_by": 1,
+            "granularity": "year"
+          }
+        },
+        {
+          "name": "string_datetime_keys_constant_list",
+          "type": "string",
+          "constant_list": {
+            "data": ["moment1","moment2","moment3"],
+            "choose_method": "round_robin"
+          }
+        },
+        {
+          "name": "datetime_fd_values",
+          "type": "datetime",
+          "functional_dependency": {
+            "name": "fd_str_datetime",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["string_datetime_keys_constant_list"],
+            "value_position": 0
+          }
+        },
+        {
+          "name": "datetime_fd_keys",
+          "type": "datetime",
+          "functional_dependency": {
+            "name": "fd_datetime_str",
+            "use_mode": "generate_from_keys",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "datetime_datetime_set_second",
+          "type": "datetime",
+          "datetime_set": {
+            "min_datetime": "2023-11-11 23:23:59",
+            "max_datetime": "2024-01-01 23:23:58",
+            "granularity_type": "second",
+            "granularity_value": 1,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "datetime_datetime_set_minute",
+          "type": "datetime",
+          "datetime_set": {
+            "min_datetime": "2023-11-11 23:23:59",
+            "max_datetime": "2024-01-01 23:23:58",
+            "granularity_type": "minute",
+            "granularity_value": 2,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "datetime_datetime_set_hour",
+          "type": "datetime",
+          "datetime_set": {
+            "min_datetime": "2023-11-11 23:23:59",
+            "max_datetime": "2024-01-01 23:23:58",
+            "granularity_type": "hour",
+            "granularity_value": 3,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "datetime_datetime_set_day",
+          "type": "datetime",
+          "datetime_set": {
+            "min_datetime": "2023-11-11 23:23:59",
+            "max_datetime": "2024-01-01 23:23:58",
+            "granularity_type": "day",
+            "granularity_value": 4,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "datetime_const",
+          "type": "datetime",
+          "constant": "2023-11-11 23:23:59"
+        },
+        {
+          "name": "datetime_constant_list",
+          "type": "datetime",
+          "constant_list": {
+            "data": [
+              "2023-11-11 23:23:59",
+              "2024-01-01 23:23:58"
+            ],
+            "choose_method": "round_robin"
+          }
+        },
+        {
+          "name": "datetime_global_constant_list_config",
+          "type": "datetime",
+          "global_constant_list": {
+            "name": "cl_datetime_config",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "datetime_global_constant_list_file",
+          "type": "datetime",
+          "global_constant_list": {
+            "name": "cl_datetime_file",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "date_sequence_day",
+          "type": "date",
+          "sequence": {
+            "start_value": "2023-12-11",
+            "increment_by": 1,
+            "granularity": "day"
+          }
+        },
+        {
+          "name": "date_sequence_month",
+          "type": "date",
+          "sequence": {
+            "start_value": "2023-12-11",
+            "increment_by": 2,
+            "granularity": "month"
+          }
+        },
+        {
+          "name": "date_sequence_year",
+          "type": "date",
+          "sequence": {
+            "start_value": "2023-12-11",
+            "increment_by": 1,
+            "granularity": "year"
+          }
+        },
+        {
+          "name": "string_date_keys_constant_list",
+          "type": "string",
+          "constant_list": {
+            "data": ["date1","date2","date3"],
+            "choose_method": "round_robin"
+          }
+        },
+        {
+          "name": "date_fd_values",
+          "type": "date",
+          "functional_dependency": {
+            "name": "fd_str_date",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["string_date_keys_constant_list"],
+            "value_position": 0
+          }
+        },
+        {
+          "name": "date_fd_keys",
+          "type": "date",
+          "functional_dependency": {
+            "name": "fd_date_str",
+            "use_mode": "generate_from_keys",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "date_date_set",
+          "type": "date",
+          "date_set": {
+            "min_date": "2023-11-11",
+            "max_date": "2024-01-01",
+            "granularity_type": "day",
+            "granularity_value": 1,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "date_const",
+          "type": "date",
+          "constant": "2023-12-11"
+        },
+        {
+          "name": "date_constant_list",
+          "type": "date",
+          "constant_list": {
+            "data": ["2023-11-11", "2024-01-01"],
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "date_global_constant_list_config",
+          "type": "date",
+          "global_constant_list": {
+            "name": "cl_date_config",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "date_global_constant_list_file",
+          "type": "date",
+          "global_constant_list": {
+            "name": "cl_date_file",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "string_random_letters",
+          "type": "string",
+          "random_letters_length": 5
+        },
+        {
+          "name": "string_random_digits",
+          "type": "string",
+          "random_digits_length": 5
+        },
+        {
+          "name": "string_uuid",
+          "type": "string",
+          "uuid": "uuid4"
+        },
+        {
+          "name": "string_const",
+          "type": "string",
+          "constant": "ERR1337"
+        },
+        {
+          "name": "string_constant_list",
+          "type": "string",
+          "constant_list": {
+            "data": ["ERR5","ERR6"],
+            "choose_method": "round_robin"
+          }
+        },
+        {
+          "name": "string_global_constant_list_config",
+          "type": "string",
+          "global_constant_list": {
+            "name": "cl_string_config",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "string_global_constant_list_file",
+          "type": "string",
+          "global_constant_list": {
+            "name": "cl_string_file",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "string_fd_values",
+          "type": "string",
+          "functional_dependency": {
+            "name": "fd_num_str",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["num_fd_keys"],
+            "value_position": 0
+          }
+        },
+        {
+          "name": "string_fd_keys",
+          "type": "string",
+          "functional_dependency": {
+            "name": "fd_str_date",
+            "use_mode": "generate_from_keys",
+            "choose_method": "random"
+          }
+        }
+      ]
+    },
+    {
+      "name": "second_test_dataset",
+      "row_count": 100,
+      "quote_values": 1,
+      "separator": "\t",
+      "write_method": "append",
+      "columns": [
+        {
+          "name": "num_sequence",
+          "type": "number",
+          "sequence": {
+            "start_value": 1
+          }
+        },
+        {
+          "name": "fd_keys",
+          "type": "number",
+          "functional_dependency": {
+            "name": "fd_num_columns",
+            "use_mode": "generate_from_keys",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "fd_values_str",
+          "type": "string",
+          "functional_dependency": {
+            "name": "fd_num_columns",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["fd_keys"],
+            "value_position": 0
+          }
+        },
+        {
+          "name": "fd_values_number",
+          "type": "number",
+          "functional_dependency": {
+            "name": "fd_num_columns",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["fd_keys"],
+            "value_position": 2
+          }
+        },
+        {
+          "name": "date_global_constant_list_config",
+          "type": "date",
+          "global_constant_list": {
+            "name": "cl_date_config",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "string_global_constant_list_file",
+          "type": "string",
+          "global_constant_list": {
+            "name": "cl_string_file",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "date_fd_values",
+          "type": "date",
+          "functional_dependency": {
+            "name": "fd_str_date",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["string_fd_keys"],
+            "value_position": 0
+          }
+        },
+        {
+          "name": "string_fd_keys",
+          "type": "string",
+          "functional_dependency": {
+            "name": "fd_str_date",
+            "use_mode": "generate_from_keys",
+            "choose_method": "random"
+          }
+        }
+      ]
+    }
+  ],
+  "constant_lists": [
+    {
+      "name": "cl_num_file",
+      "file": "./examples/cl_nums"
+    },
+    {
+      "name": "cl_num_config",
+      "data": [1, 2, 3]
+    },
+    {
+      "name": "cl_datetime_config",
+      "data": ["2023-11-11 12:01:01", "2024-01-01 13:02:02", "2024-02-02 14:03:03"]
+    },
+    {
+      "name": "cl_datetime_file",
+      "file": "./examples/cl_datetimes"
+    },
+    {
+      "name": "cl_date_config",
+      "data": ["2023-11-11", "2024-01-01", "2024-02-02"]
+    },
+    {
+      "name": "cl_date_file",
+      "file": "./examples/cl_dates"
+    },
+    {
+      "name": "cl_string_config",
+      "data": ["ERR1", "ERR2", "ERR3"]
+    },
+    {
+      "name": "cl_string_file",
+      "file": "./examples/cl_strings"
+    }
+  ],
+  "functional_dependencies": [
+    {
+      "name": "fd_num_str",
+      "key_columns": [0],
+      "data_columns": [1],
+      "file": "./examples/fd_num_str"
+    },
+    {
+      "name": "fd_num_num",
+      "key_columns": [0],
+      "data_columns": [1],
+      "file": "./examples/fd_num_num"
+    },
+    {
+      "name": "fd_datetime_str",
+      "key_columns": [0],
+      "data_columns": [1],
+      "file": "./examples/fd_datetime_str"
+    },
+    {
+      "name": "fd_str_datetime",
+      "key_columns": [0],
+      "data_columns": [1],
+      "file": "./examples/fd_str_datetime"
+    },
+    {
+      "name": "fd_date_str",
+      "key_columns": [0],
+      "data_columns": [1],
+      "file": "./examples/fd_date_str"
+    },
+    {
+      "name": "fd_str_date",
+      "key_columns": [0],
+      "data_columns": [1],
+      "file": "./examples/fd_str_date"
+    },
+    {
+      "name": "fd_num_columns",
+      "key_columns": [0],
+      "data_columns": [1,2,3],
+      "file": "./examples/fd_num_columns"
+    }
+
+  ]
+}

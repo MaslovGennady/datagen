@@ -1,0 +1,24 @@
+{
+  "$id": "number_column_constant_list_schema.json",
+  "type": "object",
+  "description": "How to get values for number column from set of constants.",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "List of constant values.",
+      "items": [{"type": "number"}],
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "choose_method": {
+      "type": "string",
+      "description": "How to choose values from set of constants.",
+      "enum": ["random", "round_robin"]
+    }
+  },
+  "required": [
+    "data",
+    "choose_method"
+  ],
+  "additionalProperties": false
+}

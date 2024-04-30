@@ -1,0 +1,73 @@
+{
+  "$id": "date_column_schema.json",
+  "description": "Schema of date column.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the column."
+    },
+    "type": {
+      "type": "string",
+      "const": "date",
+      "description": "Type of the column (only date)."
+    },
+    "sequence": {
+          "$ref": "date_column_sequence_schema.json"
+    },
+    "functional_dependency": {
+          "$ref": "functional_dependency_column_usage_schema.json"
+    },
+    "date_set": {
+          "$ref": "date_column_date_set_schema.json"
+    },
+    "constant": {
+      "type": "string",
+      "description": "Put a constant value of a format YYYY-MM-DD here.",
+      "pattern": "^[1-9][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+    },
+    "constant_list": {
+          "$ref": "date_column_constant_list_schema.json"
+    },
+    "global_constant_list": {
+      "type": "object",
+      "description": "How to use the global set of constants.",
+      "properties": {
+      "name": {
+        "type": "string",
+        "description": "What constant set to use."
+      },
+      "choose_method": {
+        "type": "string",
+        "description": "How to get values from global set of constants.",
+        "enum": ["random", "round_robin"]
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "oneOf": [
+    {
+      "required": ["sequence"]
+    },
+    {
+      "required": ["functional_dependency"]
+    },
+    {
+      "required": ["date_set"]
+    },
+    {
+      "required": ["constant"]
+    },
+    {
+      "required": ["constant_list"]
+    },
+    {
+      "required": ["global_constant_list"]
+    }
+  ],
+  "additionalProperties": false
+}

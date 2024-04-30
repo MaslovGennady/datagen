@@ -1,0 +1,29 @@
+{
+  "$id": "date_column_constant_list_schema.json",
+  "type": "object",
+  "description": "How to get values for date column from set of constants.",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "List of constant values.",
+      "items": [
+        {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+        }
+      ],
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "choose_method": {
+      "type": "string",
+      "description": "How to choose values from set of constants.",
+      "enum": ["random", "round_robin"]
+    }
+  },
+  "required": [
+    "data",
+    "choose_method"
+  ],
+  "additionalProperties": false
+}
