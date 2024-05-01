@@ -45,7 +45,7 @@ datagen project root folder
     ```
     pip install -r requirements.test.txt
     ```
-### Gereration
+### Generation
 Just execute in the root folder of the project:
 ```
 python run_generation.py  
