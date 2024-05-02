@@ -83,6 +83,21 @@ class Dataset:
         Validation with specific rules
         :return:
         """
+        # Default values just to validate jinjas
+        jinja_column_defaults = {}
+        for column in self.columns:
+            if column.__class__.__name__ == "DatetimeColumn":
+                jinja_column_defaults[column.name] = '2024-12-12'
+            elif column.__class__.__name__ == "NumberColumn":
+                jinja_column_defaults[column.name] = '1'
+            elif column.__class__.__name__ == "StringColumn":
+                jinja_column_defaults[column.name] = '1'
+            else:
+                logging_error(
+                    f"{DATAGEN_VALIDATE_ERROR}In dataset {self.name} in column {column.name} "
+                    f"unknown column type {column.__class__.__name__}"
+                )
+
         for column in self.columns:
 
             tmp_column = column
@@ -99,6 +114,17 @@ class Dataset:
                             f"in dataset_columns_as_fd_key attribute value {fd_key_column} "
                             f"not found in dataset column list names."
                         )
+
+            if column.jinja_template:
+                try:
+                    # Render for validation
+                    column.jinja_template.render(**jinja_column_defaults)
+                except Exception as e:
+                    logging_error(
+                        f"{DATAGEN_VALIDATE_ERROR}In dataset {self.name} in column {tmp_column.name} "
+                        f"jinja template is not valid",
+                        e
+                    )
 
         if self.order_by:
             for column in self.order_by:
@@ -190,7 +216,8 @@ class Dataset:
                         self.row[column.name] = column.generate()
             except Exception as e:
                 logging_error(
-                    f"{DATAGEN_RUNTIME_ERROR}Error occured while generation column={generating_column}: ", e
+                    f"{DATAGEN_RUNTIME_ERROR}Error occured while generation column={generating_column}: ",
+                    e
                 )
 
             if not self.order_by:

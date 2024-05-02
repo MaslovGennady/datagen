@@ -68,16 +68,6 @@ class StringColumn(Column):
                 f"random_digits_length <= 0"
             )
 
-        if self.jinja_template:
-            try:
-                self.jinja_template.render({})
-            except Exception as e:
-                logging_error(
-                    f"{DATAGEN_VALIDATE_ERROR}In dataset {self.dataset.name} in column {self.name} "
-                    f"jinja template is not valid",
-                    e
-                )
-
     def generate(self) -> str:
         """
         Generation in according to different methods
@@ -110,7 +100,6 @@ class StringColumn(Column):
             return uuid.uuid4()
 
         elif self.jinja_template:
-            logging_info(self.dataset.row)
             return self.jinja_template.render(**self.dataset.row)
 
         else:
