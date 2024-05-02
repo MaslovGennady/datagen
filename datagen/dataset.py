@@ -15,7 +15,7 @@ from .utils import logging_error, logging_info
 from .number_column import NumberColumn
 from .string_column import StringColumn
 from .datetime_column import DatetimeColumn
-from .const import ColumnType, WriteMethod, FDUseMode, DATAGEN_VALIDATE_ERROR
+from .const import ColumnType, WriteMethod, FDUseMode, DATAGEN_VALIDATE_ERROR, DATAGEN_RUNTIME_ERROR
 from .global_structuries import GlobalStructs
 
 
@@ -83,6 +83,21 @@ class Dataset:
         Validation with specific rules
         :return:
         """
+        # Default values just to validate jinjas
+        jinja_column_defaults = {}
+        for column in self.columns:
+            if column.__class__.__name__ == "DatetimeColumn":
+                jinja_column_defaults[column.name] = '2024-12-12'
+            elif column.__class__.__name__ == "NumberColumn":
+                jinja_column_defaults[column.name] = '1'
+            elif column.__class__.__name__ == "StringColumn":
+                jinja_column_defaults[column.name] = '1'
+            else:
+                logging_error(
+                    f"{DATAGEN_VALIDATE_ERROR}In dataset {self.name} in column {column.name} "
+                    f"unknown column type {column.__class__.__name__}"
+                )
+
         for column in self.columns:
 
             tmp_column = column
@@ -99,6 +114,17 @@ class Dataset:
                             f"in dataset_columns_as_fd_key attribute value {fd_key_column} "
                             f"not found in dataset column list names."
                         )
+
+            if column.jinja_template:
+                try:
+                    # Render for validation
+                    column.jinja_template.render(**jinja_column_defaults)
+                except Exception as e:
+                    logging_error(
+                        f"{DATAGEN_VALIDATE_ERROR}In dataset {self.name} in column {tmp_column.name} "
+                        f"jinja template is not valid",
+                        e
+                    )
 
         if self.order_by:
             for column in self.order_by:
@@ -172,18 +198,27 @@ class Dataset:
         for i in range(self.row_count):
             # First we must generate values from fd keys
             fd_keys_cols = set()
-            for column in self.columns:
-                if (
-                    column.functional_dependency
-                    and column.functional_dependency_use_mode
-                    == FDUseMode.GENERATE_FROM_KEYS
-                ):
-                    self.row[column.name] = column.generate()
-                    fd_keys_cols.add(column.name)
+            try:
+                generating_column = ''
+                for column in self.columns:
+                    if (
+                        column.functional_dependency
+                        and column.functional_dependency_use_mode
+                        == FDUseMode.GENERATE_FROM_KEYS
+                    ):
+                        generating_column = column.name
+                        self.row[column.name] = column.generate()
+                        fd_keys_cols.add(column.name)
 
-            for column in self.columns:
-                if column.name not in fd_keys_cols:
-                    self.row[column.name] = column.generate()
+                for column in self.columns:
+                    if column.name not in fd_keys_cols:
+                        generating_column = column.name
+                        self.row[column.name] = column.generate()
+            except Exception as e:
+                logging_error(
+                    f"{DATAGEN_RUNTIME_ERROR}Error occured while generation column={generating_column}: ",
+                    e
+                )
 
             if not self.order_by:
                 writer.writerow([self.row.get(column.name) for column in self.columns])

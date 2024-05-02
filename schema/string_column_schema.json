@@ -23,6 +23,10 @@
       "const": "uuid4",
       "description": "Enter uuid4 literal to generate UUID value with uuid4 algorithm."
     },
+    "jinja_template": {
+      "type": "string",
+      "description": "Python jinja2 template."
+    },
     "functional_dependency": {
           "$ref": "functional_dependency_column_usage_schema.json"
     },
@@ -74,6 +78,9 @@
     },
     {
       "required": ["uuid"]
+    },
+    {
+      "required": ["jinja_template"]
     }
   ],
   "additionalProperties": false

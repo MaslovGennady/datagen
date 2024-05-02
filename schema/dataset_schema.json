@@ -33,7 +33,7 @@
     },
     "write_method": {
       "type": "string",
-      "description": "Write-method is a method of writing data.",
+      "description": "Write-method is a method of writing data. \n Overwrite recreates the file on new generation. \n Append adds new generated data to the end of the file. \n New creates new file with date and time suffix.",
       "enum": [
         "overwrite", "append", "new"
       ]
