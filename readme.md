@@ -100,7 +100,8 @@ Big thanks to https://github.com/coveooss/json-schema-for-humans.
 1. Change jsonschema to pydantic for these reasons:
    1. Native Python syntax.
    2. All validation errors are visible after a single validation.
-   3. Easy transition from JSON configuration file to YAML. YAML format appears to be clearer and more user-friendly.
-2. Add Jinja templates as a generation method for StringColumn. Allow the use of other column values in the Jinja template.
-3. Introduce a generation method that requires a data sample with CSV rows and the required number of them in the dataset (data_convolution).
-4. Implement a generation method to generate values with nontrivial distributions.
+   3. Easy transition from JSON configuration file to YAML. \
+   YAML format appears to be clearer and more user-friendly. \
+   Also YAML format allows multi-line values, which can be useful for storing jinja templates.
+2. Introduce a generation method that requires a data sample with CSV rows and the required number of them in the dataset (data_convolution).
+3. Implement a generation method to generate values with nontrivial distributions.

@@ -397,7 +397,7 @@
         {
           "name": "string_fd_jinja",
           "type": "string",
-          "jinja_template": "string_fd_keys={{string_fd_keys}}"
+          "jinja_template": "{% if num_fd_keys > 4 %} date_sequence_month of this row is {{date_sequence_month}} and num_fd_keys is 42 {% endif %}"
         }
       ]
     },

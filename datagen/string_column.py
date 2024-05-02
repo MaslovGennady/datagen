@@ -47,6 +47,8 @@ class StringColumn(Column):
 
         self.uuid: str = column.get("uuid")
 
+        self.validate()
+
         logging_info(f"Datagen info: StringColumn {self.name} initialization ended.")
 
     def validate(self):
@@ -54,17 +56,27 @@ class StringColumn(Column):
         Validation of attributes by rules
         :return:
         """
-        if self.random_letters_length <= 0:
+        if self.random_letters_length and self.random_letters_length <= 0:
             logging_error(
                 f"{DATAGEN_VALIDATE_ERROR}In dataset {self.dataset.name} in column {self.name} "
                 f"random_letters_length <= 0"
             )
 
-        if self.random_digits_length <= 0:
+        if self.random_digits_length and self.random_digits_length <= 0:
             logging_error(
                 f"{DATAGEN_VALIDATE_ERROR}In dataset {self.dataset.name} in column {self.name} "
                 f"random_digits_length <= 0"
             )
+
+        if self.jinja_template:
+            try:
+                self.jinja_template.render({})
+            except Exception as e:
+                logging_error(
+                    f"{DATAGEN_VALIDATE_ERROR}In dataset {self.dataset.name} in column {self.name} "
+                    f"jinja template is not valid",
+                    e
+                )
 
     def generate(self) -> str:
         """
@@ -98,6 +110,7 @@ class StringColumn(Column):
             return uuid.uuid4()
 
         elif self.jinja_template:
+            logging_info(self.dataset.row)
             return self.jinja_template.render(**self.dataset.row)
 
         else:

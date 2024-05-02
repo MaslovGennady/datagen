@@ -122,7 +122,14 @@ class Column:
             )
 
         if self.jinja_template:
-            self.jinja_template = Template(self.jinja_template)
+            try:
+                self.jinja_template = Template(self.jinja_template)
+            except Exception as e:
+                logging_error(
+                    f"{DATAGEN_VALIDATE_ERROR}In dataset {self.dataset.name} in column {self.name} "
+                    f"error when creating jinja template",
+                    e
+                )
 
     def super_validate(self):
         """

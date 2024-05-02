@@ -15,7 +15,7 @@ from .utils import logging_error, logging_info
 from .number_column import NumberColumn
 from .string_column import StringColumn
 from .datetime_column import DatetimeColumn
-from .const import ColumnType, WriteMethod, FDUseMode, DATAGEN_VALIDATE_ERROR
+from .const import ColumnType, WriteMethod, FDUseMode, DATAGEN_VALIDATE_ERROR, DATAGEN_RUNTIME_ERROR
 from .global_structuries import GlobalStructs
 
 
@@ -172,18 +172,26 @@ class Dataset:
         for i in range(self.row_count):
             # First we must generate values from fd keys
             fd_keys_cols = set()
-            for column in self.columns:
-                if (
-                    column.functional_dependency
-                    and column.functional_dependency_use_mode
-                    == FDUseMode.GENERATE_FROM_KEYS
-                ):
-                    self.row[column.name] = column.generate()
-                    fd_keys_cols.add(column.name)
+            try:
+                generating_column = ''
+                for column in self.columns:
+                    if (
+                        column.functional_dependency
+                        and column.functional_dependency_use_mode
+                        == FDUseMode.GENERATE_FROM_KEYS
+                    ):
+                        generating_column = column.name
+                        self.row[column.name] = column.generate()
+                        fd_keys_cols.add(column.name)
 
-            for column in self.columns:
-                if column.name not in fd_keys_cols:
-                    self.row[column.name] = column.generate()
+                for column in self.columns:
+                    if column.name not in fd_keys_cols:
+                        generating_column = column.name
+                        self.row[column.name] = column.generate()
+            except Exception as e:
+                logging_error(
+                    f"{DATAGEN_RUNTIME_ERROR}Error occured while generation column={generating_column}: ", e
+                )
 
             if not self.order_by:
                 writer.writerow([self.row.get(column.name) for column in self.columns])
