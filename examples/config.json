@@ -393,6 +393,11 @@
             "use_mode": "generate_from_keys",
             "choose_method": "random"
           }
+        },
+        {
+          "name": "string_fd_jinja",
+          "type": "string",
+          "jinja_template": "string_fd_keys={{string_fd_keys}}"
         }
       ]
     },
