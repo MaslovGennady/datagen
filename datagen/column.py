@@ -3,6 +3,8 @@ Column parent class
 Other column classes inherit this class
 """
 
+from jinja2 import Template
+
 from .constant_list import ConstantList
 from .functional_dependency import FunctionalDependency
 from .utils import logging_error
@@ -28,6 +30,7 @@ class Column:
             to return as generated value
         :attribute functional_dependency_choose_method: how to choose value from set
         :attribute functional_dependency_current_idx: additional attribute
+        :attribute jinja_template: jinja template
         """
         self.dataset = dataset
         self.name: str = column.get("name").lower()
@@ -67,6 +70,8 @@ class Column:
             "choose_method"
         )
         self.functional_dependency_current_idx: int = 0
+
+        self.jinja_template: str = column.get("jinja_template")
 
     def super_generation_init(self, p_global_structs: GlobalStructs):
         """
@@ -115,6 +120,9 @@ class Column:
             self.constant_list_choose_method: ChooseMethod = ChooseMethod(
                 self.constant_list_choose_method
             )
+
+        if self.jinja_template:
+            self.jinja_template = Template(self.jinja_template)
 
     def super_validate(self):
         """

@@ -103,3 +103,13 @@ def generate_functional_dependency_value(column):
         return column.functional_dependency.get_value_by_key(
             key, column.functional_dependency_value_position
         )
+
+
+def generate_rendered_jinja_str(column):
+    """
+    Common method for all columns to render jinja template
+    :param column: column class object
+    :return:
+    """
+
+    return column.jinja_template.render(**column.row)
