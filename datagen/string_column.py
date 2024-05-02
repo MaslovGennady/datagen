@@ -97,6 +97,9 @@ class StringColumn(Column):
         elif self.uuid:
             return uuid.uuid4()
 
+        elif self.jinja_template:
+            return self.jinja_template.render(**self.dataset.row)
+
         else:
             logging_error(
                 f"{DATAGEN_RUNTIME_ERROR}In dataset {self.dataset.name} in column {self.name} "
