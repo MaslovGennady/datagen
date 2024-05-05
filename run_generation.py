@@ -115,6 +115,14 @@ def global_config_validations(config):
             f"{DATAGEN_VALIDATE_ERROR}In generation config duplicate names of constant lists found."
         )
 
+    dc_names = [
+        data_convolution.get("name") for data_convolution in config.get("data_convolutions", [])
+    ]
+    if len(dc_names) != len(list(dict.fromkeys(dc_names))):
+        logging_error(
+            f"{DATAGEN_VALIDATE_ERROR}In generation config duplicate names of data convolution found."
+        )
+
 
 if __name__ == "__main__":
 

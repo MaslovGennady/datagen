@@ -10,6 +10,11 @@
     "file": {
       "type": "string",
       "description": "File is the path to data on disk."
+    },
+    "separator": {
+      "type": "string",
+      "description": "Separator is the symbol used as a separator while parsing separated values from the file.",
+      "maxLength": 1
     }
   },
   "required": ["name","file"]
