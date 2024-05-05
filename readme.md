@@ -92,6 +92,8 @@ schema folder
 ├── config_schema.json                              # general config schema  
 ├── constant_list_schema.json                       # schema for the global set of constants
 ├── functional_dependency_column_usage_schema.json  # schema for using key-value structures for generating column values
+├── global_constant_list_column_usage_schema.json   # schema for using global constant lists structures for generating column values
+├── data_convolution_column_usage_schema.json       # schema for using collapsed data structures for generating column values
 └── functional_dependency_schema.json               # schema for key-value structures
 ```
 You can view the configuration file documentation in a convenient format after copying the project files locally and opening the file ./html_doc/config_schema.html \

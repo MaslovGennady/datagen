@@ -559,6 +559,11 @@
       "data_columns": [1,2,3],
       "file": "./examples/fd_num_columns"
     }
-
+  ],
+  "data_convolutions": [
+    {
+      "name": "data_convolution_1",
+      "file": "./examples/data_convolution_1"
+    }
   ]
 }

@@ -38,19 +38,10 @@
           "$ref": "string_column_constant_list_schema.json"
     },
     "global_constant_list": {
-      "type": "object",
-      "description": "How to use the global set of constants.",
-      "properties": {
-      "name": {
-        "type": "string",
-        "description": "What constant set to use."
-        },
-      "choose_method": {
-        "type": "string",
-        "description": "How to get values from global set of constants.",
-        "enum": ["random", "round_robin"]
-        }
-      }
+          "$ref": "global_constant_list_column_usage_schema.json"
+    },
+    "data_convolution": {
+          "$ref": "data_convolution_column_usage_schema.json"
     }
   },
   "required": [
@@ -81,6 +72,9 @@
     },
     {
       "required": ["jinja_template"]
+    },
+    {
+      "required": ["data_convolution"]
     }
   ],
   "additionalProperties": false

@@ -1,0 +1,16 @@
+{
+  "$id": "data_convolution_schema.json",
+  "type": "object",
+  "description": "Collapsed data format - row attributes and counts of rows.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name can be used in the column definition section called data-convolution."
+    },
+    "file": {
+      "type": "string",
+      "description": "File is the path to data on disk."
+    }
+  },
+  "required": ["name","file"]
+}

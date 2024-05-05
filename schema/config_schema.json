@@ -29,6 +29,14 @@
       "items": {
         "$ref": "functional_dependency_schema.json"
       }
+    },
+    "data_convolutions": {
+      "description": "List of elements of in collapsed data format - row attributes and counts of rows.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "data_convolution_schema.json"
+      }
     }
   },
   "required": [

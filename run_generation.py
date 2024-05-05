@@ -22,6 +22,9 @@ def prepare_validator() -> Draft7Validator:
 
     schema_files = [
         "schema/functional_dependency_column_usage_schema.json",
+        "schema/global_constant_list_column_usage_schema.json",
+        "schema/data_convolution_column_usage_schema.json",
+        "schema/data_convolution_schema.json",
         "schema/constant_list_schema.json",
         "schema/dataset_schema.json",
         "schema/functional_dependency_schema.json",
