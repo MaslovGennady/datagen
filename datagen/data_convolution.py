@@ -72,7 +72,7 @@ class DataConvolution:
                 if not row[-1].isdigit() or int(row[-1]) < 0:
                     logging_error(
                         f"{DATAGEN_VALIDATE_ERROR}last element of {row_number} row in data of "
-                        f"{self.file} data_convolution is not a positive number."
+                        f"{self.file} data_convolution is not a positive number. "
                         f"But it must be."
                     )
 

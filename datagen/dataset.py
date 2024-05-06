@@ -79,8 +79,7 @@ class Dataset:
             self.write_method = WriteMethod(self.write_method.lower())
 
         self.data_convolution: DataConvolution = None
-        self.data_convolution_name: str = column.get("data_convolution", {}).get("name", "").lower()
-        self.data_convolution_value_position: str = column.get("value_position", 0)
+        self.data_convolution_name: str = dataset.get("data_convolution_name", "").lower()
 
         self.generation_init(p_global_structs)
         self.validate(p_global_structs)
@@ -298,7 +297,7 @@ class Dataset:
                             generating_column = ''
                             for column in priority_columns:
                                 generating_column = column.name
-                                if column.data_convolution_value_position:
+                                if column.data_convolution_value_position is not None:
                                     self.row[column.name] = dc_row[column.data_convolution_value_position]
                                 else:
                                     self.row[column.name] = column.generate()
@@ -309,6 +308,11 @@ class Dataset:
                                 f"column={generating_column}: ",
                                 e
                             )
+
+                    if not self.order_by:
+                        writer.writerow([self.row.get(column.name) for column in self.columns])
+                    else:
+                        self.rows.append([self.row.get(column.name) for column in self.columns])
 
         logging_info(f"Datagen info: Dataset {self.name} generate_data ended.")
 

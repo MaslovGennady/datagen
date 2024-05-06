@@ -480,6 +480,25 @@
           }
         }
       ]
+    },
+    {
+      "name": "dc_test_dataset",
+      "data_convolution_name": "data_convolution_1",
+      "quote_values": 1,
+      "separator": "\t",
+      "write_method": "overwrite",
+      "columns": [
+        {
+          "name": "data_convolution_1st_column",
+          "type": "number",
+          "data_convolution_value_position": 0
+        },
+        {
+          "name": "data_convolution_2nd_column",
+          "type": "number",
+          "data_convolution_value_position": 1
+        }
+      ]
     }
   ],
   "constant_lists": [
