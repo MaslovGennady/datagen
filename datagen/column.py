@@ -73,6 +73,8 @@ class Column:
 
         self.jinja_template: str = column.get("jinja_template")
 
+        self.data_convolution_value_position: int = column.get("data_convolution_value_position")
+
     def super_generation_init(self, p_global_structs: GlobalStructs):
         """
         Transform of class attributes, prepare for generating
@@ -137,6 +139,8 @@ class Column:
         :return:
         """
         if self.functional_dependency:
+            # Subtract 1 from data_length for the fact that data_length is a result of len()
+            # but functional_dependency_value_position starts from 0
             if (
                 self.functional_dependency_value_position
                 > self.functional_dependency.data_length - 1

@@ -1,7 +1,7 @@
 {
   "$id": "data_convolution_schema.json",
   "type": "object",
-  "description": "Collapsed data format - row attributes and counts of rows.",
+  "description": "Collapsed data format - row attributes and counts of rows. Format is:\n attr11,attr12,attr13...rows_cnt1\nattr21,attr22,attr23...rows_cnt2\n...\n Where attr is some value.",
   "properties": {
     "name": {
       "type": "string",

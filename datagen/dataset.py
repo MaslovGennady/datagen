@@ -12,6 +12,7 @@ from datetime import datetime
 from typing import Any, List
 
 from .utils import logging_error, logging_info
+from .data_convolution import DataConvolution
 from .number_column import NumberColumn
 from .string_column import StringColumn
 from .datetime_column import DatetimeColumn
@@ -40,6 +41,9 @@ class Dataset:
         :attribute separator: separator symbol for data file
         :attribute quote_values: quote values in result file or not
         :attribute write_method: column definitions list
+        :attribute data_convolution_name: name of DC that will be used for generation
+        :attribute data_convolution: link to actual DC object that will be used for generation
+        :attribute data_convolution_value_position: position of value in DC row
         """
 
         self.name: str = dataset.get("name").lower()
@@ -74,9 +78,34 @@ class Dataset:
         if self.write_method:
             self.write_method = WriteMethod(self.write_method.lower())
 
+        self.data_convolution: DataConvolution = None
+        self.data_convolution_name: str = column.get("data_convolution", {}).get("name", "").lower()
+        self.data_convolution_value_position: str = column.get("value_position", 0)
+
+        self.generation_init(p_global_structs)
         self.validate(p_global_structs)
 
         logging_info(f"Datagen info: Dataset {self.name} initialization ended.")
+
+    def generation_init(self, p_global_structs):
+        """
+        Transform of class attributes, prepare for generating
+        :param p_global_structs: common data structures
+        :return:
+        """
+        if self.data_convolution_name != "":
+            if (
+                self.data_convolution_name
+                in p_global_structs.data_convolutions
+            ):
+                self.data_convolution = p_global_structs.data_convolutions[
+                    self.data_convolution_name
+                ]
+            else:
+                logging_error(
+                    f"{DATAGEN_VALIDATE_ERROR}Data convolution {self.data_convolution_name} not found in "
+                    f"data_convolutions section of config. Dataset={self.name}"
+                )
 
     def validate(self, p_global_structs: GlobalStructs):
         """
@@ -124,6 +153,21 @@ class Dataset:
                         f"{DATAGEN_VALIDATE_ERROR}In dataset {self.name} in column {tmp_column.name} "
                         f"jinja template is not valid",
                         e
+                    )
+
+            if self.data_convolution:
+                # Subtract 1 from data_length for the fact that data_length is a len() of DC row
+                # but data_convolution_value_position starts from 0
+                # And another subtraction of 1 for the fact that the last element of DC row is s number of rows
+                if (
+                    column.data_convolution_value_position and
+                    column.data_convolution_value_position
+                    > self.data_convolution.data_length - 2
+                ):
+                    logging_error(
+                        f"{DATAGEN_VALIDATE_ERROR}In column {column.name} "
+                        f"value_position {column.data_convolution_value_position} for "
+                        f"data convolution {self.data_convolution_name} is too big."
                     )
 
         if self.order_by:
@@ -195,35 +239,76 @@ class Dataset:
 
         logging_info(f"Datagen info: Dataset {self.name} generate_data started.")
 
-        for i in range(self.row_count):
-            # First we must generate values from fd keys
-            fd_keys_cols = set()
-            try:
-                generating_column = ''
-                for column in self.columns:
-                    if (
-                        column.functional_dependency
-                        and column.functional_dependency_use_mode
-                        == FDUseMode.GENERATE_FROM_KEYS
-                    ):
-                        generating_column = column.name
-                        self.row[column.name] = column.generate()
-                        fd_keys_cols.add(column.name)
+        first_priority_generation_cols = []
+        second_priority_generation_cols = []
+        third_priority_generation_cols = []
 
-                for column in self.columns:
-                    if column.name not in fd_keys_cols:
-                        generating_column = column.name
-                        self.row[column.name] = column.generate()
-            except Exception as e:
-                logging_error(
-                    f"{DATAGEN_RUNTIME_ERROR}Error occured while generation column={generating_column}: ",
-                    e
-                )
-
-            if not self.order_by:
-                writer.writerow([self.row.get(column.name) for column in self.columns])
+        for column in self.columns:
+            if not (
+                    column.functional_dependency
+                    and column.functional_dependency_use_mode
+                    == FDUseMode.CHOOSE_FROM_VALUES
+            ) and not column.jinja_template:
+                first_priority_generation_cols.append(column)
+            elif (
+                    column.functional_dependency
+                    and column.functional_dependency_use_mode
+                    == FDUseMode.CHOOSE_FROM_VALUES
+            ):
+                second_priority_generation_cols.append(column)
             else:
-                self.rows.append([self.row.get(column.name) for column in self.columns])
+                third_priority_generation_cols.append(column)
+
+        generation_order = [first_priority_generation_cols,
+                            second_priority_generation_cols,
+                            third_priority_generation_cols]
+
+        if self.row_count:
+
+            for i in range(self.row_count):
+
+                for priority_columns in generation_order:
+
+                    try:
+                        generating_column = ''
+                        for column in priority_columns:
+                            generating_column = column.name
+                            self.row[column.name] = column.generate()
+
+                    except Exception as e:
+                        logging_error(
+                            f"{DATAGEN_RUNTIME_ERROR}Error occured while generation column={generating_column}: ",
+                            e
+                        )
+
+                if not self.order_by:
+                    writer.writerow([self.row.get(column.name) for column in self.columns])
+                else:
+                    self.rows.append([self.row.get(column.name) for column in self.columns])
+
+        elif self.data_convolution:
+
+            for dc_row in self.data_convolution.data:
+
+                for i in range(int(dc_row[-1])):
+
+                    for priority_columns in generation_order:
+
+                        try:
+                            generating_column = ''
+                            for column in priority_columns:
+                                generating_column = column.name
+                                if column.data_convolution_value_position:
+                                    self.row[column.name] = dc_row[column.data_convolution_value_position]
+                                else:
+                                    self.row[column.name] = column.generate()
+
+                        except Exception as e:
+                            logging_error(
+                                f"{DATAGEN_RUNTIME_ERROR}Error occured while generation "
+                                f"column={generating_column}: ",
+                                e
+                            )
 
         logging_info(f"Datagen info: Dataset {self.name} generate_data ended.")
 

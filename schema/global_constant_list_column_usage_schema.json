@@ -12,5 +12,6 @@
       "description": "How to get values from global set of constants.",
       "enum": ["random", "round_robin"]
     }
-  }
+  },
+  "additionalProperties": false
 }
