@@ -107,7 +107,7 @@ for dataset in datasets_list:
         logging_info(f"Error reading dataset from {datasets_path}{dataset.name}.csv", e)
         continue
 
-    if dataset.write_method != WriteMethod.APPEND:
+    if dataset.write_method != WriteMethod.APPEND and not dataset.data_convolution:
         dataset_row_count = len(df)
         if dataset.row_count != dataset_row_count:
             dataset_errors_cnt += 1

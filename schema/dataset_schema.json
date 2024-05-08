@@ -68,5 +68,6 @@
   "oneOf": [
     {"required": ["name", "row_count", "columns"]},
     {"required": ["name", "data_convolution_name", "columns"]}
-  ]
+  ],
+  "additionalProperties": false
 }
