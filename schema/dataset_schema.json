@@ -13,7 +13,7 @@
     },
     "data_convolution_name": {
       "type": "string",
-      "description": "Name of collapsed data structure template to generate data of this dataset."
+      "description": "Name of collapsed data structure template to use to generate data of this dataset."
     },
     "order_by": {
       "type": "array",

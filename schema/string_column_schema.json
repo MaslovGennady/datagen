@@ -42,7 +42,7 @@
     },
     "data_convolution_value_position": {
       "type": "integer",
-      "description": "Position of value in data-convolution to return here as generated value."
+      "description": "Position of value in data-convolution data to return as a generated value."
     }
   },
   "required": [
