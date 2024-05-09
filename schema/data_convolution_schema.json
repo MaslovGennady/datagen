@@ -5,7 +5,7 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "Name can be used in the column definition section called data-convolution."
+      "description": "Name can be used in a dataset definition attribute called data-convolution-name."
     },
     "file": {
       "type": "string",
