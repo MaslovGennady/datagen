@@ -92,7 +92,7 @@ class Dataset:
         :param p_global_structs: common data structures
         :return:
         """
-        if self.data_convolution_name != "":
+        if self.data_convolution_name:
             if (
                 self.data_convolution_name
                 in p_global_structs.data_convolutions
@@ -154,14 +154,20 @@ class Dataset:
                         e
                     )
 
+            if column.data_convolution_value_position is not None and not self.data_convolution:
+                logging_error(
+                    f"{DATAGEN_VALIDATE_ERROR}In dataset {self.name} in column {tmp_column.name} "
+                    f"data_convolution_value_position attribute filled, "
+                    f"but no data_convolution_name given in dataset options."
+                )
+
             if self.data_convolution:
                 # Subtract 1 from data_length for the fact that data_length is a len() of DC row
                 # but data_convolution_value_position starts from 0
                 # And another subtraction of 1 for the fact that the last element of DC row is s number of rows
                 if (
-                    column.data_convolution_value_position and
-                    column.data_convolution_value_position
-                    > self.data_convolution.data_length - 2
+                    column.data_convolution_value_position is not None and
+                    column.data_convolution_value_position > self.data_convolution.data_length - 2
                 ):
                     logging_error(
                         f"{DATAGEN_VALIDATE_ERROR}In column {column.name} "

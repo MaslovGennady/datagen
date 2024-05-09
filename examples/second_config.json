@@ -47,6 +47,7 @@
     },
     {
       "name": "dataset_from_generated_dc",
+      "data_convolution_name": "data_convolution_1",
       "quote_values": 1,
       "separator": "\t",
       "write_method": "overwrite",
