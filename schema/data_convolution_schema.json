@@ -1,7 +1,7 @@
 {
   "$id": "data_convolution_schema.json",
   "type": "object",
-  "description": "Collapsed data format - row attributes and counts of rows. Format is:\n attr11,attr12,attr13...rows-cnt1\nattr21,attr22,attr23...rows-cnt2\n...\n Where attr is some value.",
+  "description": "Collapsed data format - row attributes and counts of rows. Format is:\n value11,value12,value13...rows-cnt1\nvalue21,value22,value23...rows-cnt2\n...\nUsing this template you can generate rows-cntN rows consisting of the values specified in the template (valueNN)",
   "properties": {
     "name": {
       "type": "string",
