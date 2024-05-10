@@ -29,5 +29,6 @@
   "oneOf": [
     {"required": ["name","file"]},
     {"required": ["name","data"]}
-  ]
+  ],
+  "additionalProperties": false
 }

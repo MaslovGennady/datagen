@@ -1,0 +1,22 @@
+{
+  "$id": "data_convolution_schema.json",
+  "type": "object",
+  "description": "Collapsed data format - row attributes and counts of rows. Format is:\n value11,value12,value13...rows-cnt1\nvalue21,value22,value23...rows-cnt2\n...\nUsing this template you can generate rows-cntN rows consisting of the values specified in the template (valueNN)",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name can be used in a dataset definition attribute called data-convolution-name."
+    },
+    "file": {
+      "type": "string",
+      "description": "File is the path to data on disk."
+    },
+    "separator": {
+      "type": "string",
+      "description": "Separator is the symbol used as a separator while parsing separated values from the file.",
+      "maxLength": 1
+    }
+  },
+  "required": ["name","file"],
+  "additionalProperties": false
+}

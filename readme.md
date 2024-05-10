@@ -3,7 +3,7 @@ DataGen is a utility for generating data based on a given configuration file and
 The main idea here is to generate a dataset consisting of columns. \
 "To generate a dataset" means to generate values for all its columns for the number of times specified in the configuration file. \
 For all columns, we have one standard generation method, such as sequence or a set of constants, etc. \
-In addition to standard methods, we can use a global set of constants (constant_lists) and key-value structures (functional_dependency).
+In addition to standard methods, we can use a global set of constants (constant_lists) and key-value structures (functional_dependency) and collapsed data template (data_convolution).
 
 ### Structure
 ```
@@ -91,6 +91,8 @@ schema folder
 │   └── string_column_schema.json                   # general schema for string columns
 ├── config_schema.json                              # general config schema  
 ├── constant_list_schema.json                       # schema for the global set of constants
+├── global_constant_list_column_usage_schema.json   # schema for using global constant lists structures for generating column values
+├── data_convolution_schema.json                    # schema for collapsed data template 
 ├── functional_dependency_column_usage_schema.json  # schema for using key-value structures for generating column values
 └── functional_dependency_schema.json               # schema for key-value structures
 ```
@@ -103,5 +105,4 @@ Big thanks to https://github.com/coveooss/json-schema-for-humans.
    3. Easy transition from JSON configuration file to YAML. \
    YAML format appears to be clearer and more user-friendly. \
    Also YAML format allows multi-line values, which can be useful for storing jinja templates.
-2. Introduce a generation method that requires a data sample with CSV rows and the required number of them in the dataset (data_convolution).
-3. Implement a generation method to generate values with nontrivial distributions.
+2. Implement a generation method to generate values with nontrivial distributions.

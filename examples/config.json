@@ -480,6 +480,161 @@
           }
         }
       ]
+    },
+    {
+      "name": "dc_test_dataset",
+      "data_convolution_name": "data_convolution_1",
+      "quote_values": 1,
+      "separator": "\t",
+      "write_method": "overwrite",
+      "columns": [
+        {
+          "name": "data_convolution_1st_column",
+          "type": "number",
+          "data_convolution_value_position": 0
+        },
+        {
+          "name": "data_convolution_2nd_column",
+          "type": "number",
+          "data_convolution_value_position": 1
+        },
+        {
+          "name": "data_convolution_3rd_column",
+          "type": "string",
+          "data_convolution_value_position": 2
+        },
+        {
+          "name": "data_convolution_2nd_double",
+          "type": "number",
+          "data_convolution_value_position": 1
+        },
+        {
+          "name": "num_sequence",
+          "type": "number",
+          "sequence": {
+            "start_value": 1
+          }
+        },
+        {
+          "name": "num_fd_values",
+          "type": "number",
+          "functional_dependency": {
+            "name": "fd_num_num",
+            "use_mode": "choose_from_values",
+            "dataset_columns_as_fd_key": ["num_fd_keys"],
+            "value_position": 0
+          }
+        },
+        {
+          "name": "num_fd_keys",
+          "type": "number",
+          "functional_dependency": {
+            "name": "fd_num_str",
+            "use_mode": "generate_from_keys",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "num_number_set",
+          "type": "number",
+          "number_set": {
+            "min_number": 0,
+            "max_number": 45,
+            "granularity": 15,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "num_constant_list",
+          "type": "number",
+          "constant_list": {
+            "data": [42, 23, 3, 5, 9],
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "num_constant_list_name_file",
+          "type": "number",
+          "global_constant_list": {
+            "name": "cl_num_file",
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "datetime_sequence_second",
+          "type": "datetime",
+          "sequence": {
+            "start_value": "2023-11-11 23:23:59",
+            "increment_by": 1,
+            "granularity": "second"
+          }
+        },
+        {
+          "name": "datetime_datetime_set_second",
+          "type": "datetime",
+          "datetime_set": {
+            "min_datetime": "2023-11-11 23:23:59",
+            "max_datetime": "2024-01-01 23:23:58",
+            "granularity_type": "second",
+            "granularity_value": 1,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "date_date_set",
+          "type": "date",
+          "date_set": {
+            "min_date": "2023-11-11",
+            "max_date": "2024-01-01",
+            "granularity_type": "day",
+            "granularity_value": 1,
+            "choose_method": "random"
+          }
+        },
+        {
+          "name": "string_random_letters",
+          "type": "string",
+          "random_letters_length": 5
+        },
+        {
+          "name": "string_random_digits",
+          "type": "string",
+          "random_digits_length": 5
+        },
+        {
+          "name": "string_uuid",
+          "type": "string",
+          "uuid": "uuid4"
+        }
+      ]
+    },
+    {
+      "name": "dataset_generate_dc_template",
+      "row_count": 10,
+      "quote_values": 1,
+      "separator": "\t",
+      "write_method": "overwrite",
+      "columns": [
+        {
+          "name": "date_sequence",
+          "type": "date",
+          "sequence": {
+            "start_value": "2023-11-11",
+            "increment_by": 1,
+            "granularity": "day"
+          }
+        },
+        {
+          "name": "row_count",
+          "type": "number",
+          "number_set": {
+            "min_number": 1,
+            "max_number": 100,
+            "granularity": 1,
+            "choose_method": "random"
+          }
+        }
+      ]
     }
   ],
   "constant_lists": [
@@ -559,6 +714,11 @@
       "data_columns": [1,2,3],
       "file": "./examples/fd_num_columns"
     }
-
+  ],
+  "data_convolutions": [
+    {
+      "name": "data_convolution_1",
+      "file": "./examples/data_convolution_1"
+    }
   ]
 }

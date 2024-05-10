@@ -30,19 +30,11 @@
           "$ref": "date_column_constant_list_schema.json"
     },
     "global_constant_list": {
-      "type": "object",
-      "description": "How to use the global set of constants.",
-      "properties": {
-      "name": {
-        "type": "string",
-        "description": "What constant set to use."
-      },
-      "choose_method": {
-        "type": "string",
-        "description": "How to get values from global set of constants.",
-        "enum": ["random", "round_robin"]
-        }
-      }
+          "$ref": "global_constant_list_column_usage_schema.json"
+    },
+    "data_convolution_value_position": {
+      "type": "integer",
+      "description": "Position of value in data-convolution data to return as a generated value."
     }
   },
   "required": [
@@ -67,6 +59,9 @@
     },
     {
       "required": ["global_constant_list"]
+    },
+    {
+      "required": ["data_convolution_value_position"]
     }
   ],
   "additionalProperties": false

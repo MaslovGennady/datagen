@@ -11,6 +11,10 @@
       "type": "integer",
       "description": "Row-count is the number of rows to generate."
     },
+    "data_convolution_name": {
+      "type": "string",
+      "description": "Name of collapsed data structure template to use to generate data of this dataset."
+    },
     "order_by": {
       "type": "array",
       "description": "Order-by is a list of columns by which to sort the dataset.",
@@ -61,5 +65,9 @@
       }
     }
   },
-  "required": ["name", "row_count", "columns"]
+  "oneOf": [
+    {"required": ["name", "row_count", "columns"]},
+    {"required": ["name", "data_convolution_name", "columns"]}
+  ],
+  "additionalProperties": false
 }

@@ -51,5 +51,6 @@
       "dataset_columns_as_fd_key",
       "value_position"
     ]
-  }
+  },
+  "additionalProperties": false
 }

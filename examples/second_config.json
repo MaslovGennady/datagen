@@ -44,6 +44,30 @@
           }
         }
       ]
+    },
+    {
+      "name": "dataset_from_generated_dc",
+      "data_convolution_name": "data_convolution_1",
+      "quote_values": 1,
+      "separator": "\t",
+      "write_method": "overwrite",
+      "columns": [
+        {
+          "name": "data_value",
+          "type": "date",
+          "data_convolution_value_position": 0
+        },
+        {
+          "name": "kind_of_status_id",
+          "type": "number",
+          "number_set": {
+            "min_number": 1,
+            "max_number": 5,
+            "granularity": 1,
+            "choose_method": "random"
+          }
+        }
+      ]
     }
   ],
   "functional_dependencies": [
@@ -54,6 +78,12 @@
       "file": "./result/second_test_dataset",
       "separator": "\t"
     }
-
+  ],
+  "data_convolutions": [
+    {
+      "name": "data_convolution_1",
+      "file": "./result/dataset_generate_dc_template",
+      "separator": "\t"
+    }
   ]
 }

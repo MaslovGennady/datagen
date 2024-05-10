@@ -36,5 +36,6 @@
     "key_columns",
     "data_columns",
     "file"
-  ]
+  ],
+  "additionalProperties": false
 }

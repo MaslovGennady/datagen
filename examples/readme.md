@@ -20,3 +20,12 @@ Instructions for executing examples generation:
     ```
 7. Сheck the result in folder named "result"
 
+What we end up with: 
+1. datagen.log - default name of generation log file
+2. datagen_validation.log - default name of data testing log file
+3. first_test_dataset - dataset with listing of all possible cases of column generation
+4. second_test_dataset - dataset that will serve as a functional dependency for other dataset generation
+5. dc_test_dataset - dataset generated using collapsed data template (data_convolution)
+6. dataset_generate_dc_template - dataset that will serve as a data convolution for other dataset generation 
+7. third_test_dataset - dataset generated using functional dependency from second_test_dataset
+8. dataset_from_generated_dc - dataset generated using data convolution from dataset_generate_dc_template

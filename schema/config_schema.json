@@ -8,11 +8,9 @@
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": [
-        {
-          "$ref": "dataset_schema.json"
-        }
-      ]
+      "items": {
+        "$ref": "dataset_schema.json"
+      }
     },
     "constant_lists": {
       "description": "List of elements of set of constants type.",
@@ -29,9 +27,18 @@
       "items": {
         "$ref": "functional_dependency_schema.json"
       }
+    },
+    "data_convolutions": {
+      "description": "List of elements of in collapsed data format - row attributes and counts of rows.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "data_convolution_schema.json"
+      }
     }
   },
   "required": [
     "datasets"
-  ]
+  ],
+  "additionalProperties": false
 }
